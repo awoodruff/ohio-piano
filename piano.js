@@ -49,8 +49,8 @@ function scaleToFit() {
   var bounds = countiesLayer.getBounds();
   var nw = map.latLngToContainerPoint(bounds.getNorthWest());
   var se = map.latLngToContainerPoint(bounds.getSouthEast());
-  var w = se.x - nw.x;
-  var h = se.y - nw.y;
+  var w = se.x - nw.x + 50 ;
+  var h = se.y - nw.y + 50;
   var ds = Math.min( $('#map').width()/w, $('#map').height()/h );
   map.setView(bounds.getCenter(),map.getZoom() + Math.log(ds)/Math.log(2),{animate:false});
 }
