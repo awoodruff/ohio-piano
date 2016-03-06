@@ -1,0 +1,45 @@
+<html>
+<head>
+  <title>Ohio is a Piano</title>
+  <link rel='stylesheet' href='leaflet/leaflet.css' />
+  <link rel='stylesheet' href='piano.css' />
+  <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+</head>
+<body>
+  <div id='wrapper'>
+    <div id='ui'>
+      <h3>First, sort notes by:</h3>
+      <section id='sort'>
+        <select id='sort-field'></select>
+      </section>
+      <h3>Then...</h3>
+      <section id='interact'>
+        <h4>Interact with the map!</h4>
+      </section>
+      <section id='order'>
+        <h4>Play counties in order!</h4><div class='play'></div>
+      </section>
+      <section id='song'>
+        <h4>Play a song!</h4><div class='play'></div>
+      </section>
+      <section>
+        <h4 id='route'>Play a route!</h4>
+        <p>From:</p>
+        <select id='from'></select>
+        <p>To:</p>
+        <select id='to'></select>
+      </section>
+    </div>
+    <div id='map'></div>
+  </div>
+
+  <script src='jquery/jquery-2.2.1.min.js'></script>
+  <script src='lib/papaparse.min.js'></script>
+  <script src='leaflet/leaflet.js'></script>
+  <script src='lib/leaflet-pip.min.js'></script>
+  <script src='song.js'></script>
+  <script src='cities.js'></script>
+  <script src='counties.js'></script>
+  <script src='piano.js'></script>
+</body>
+</html>

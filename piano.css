@@ -1,0 +1,74 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  color: #333;
+  font-family: 'PT Sans', sans-serif;
+}
+#wrapper {
+  white-space: nowrap;
+  width: 100%;
+  height: 100%;
+}
+
+#ui {
+  width: 240px;
+  background-color: #eee;
+  height: 100%;
+  float: left;
+  border-right: 1px solid #999;
+}
+
+#map {
+  height: 100%;
+  margin-left: 240px;
+}
+
+#ui section{
+  padding: 10px;
+  height: 40px;
+  border-top: 1px solid #ccc;
+}
+
+#ui section#sort, #ui section#interact {
+  border-top: none;
+}
+
+#ui h3 {
+  margin: 0 0 10px 10px;
+  text-transform: uppercase;
+}
+
+select {
+  width: 180px;
+  font-size: 24px;
+}
+
+#ui section h4 {
+  margin: 0;
+}
+
+#ui section h4, #ui section > div {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 40px;
+}
+
+#order, #song {
+  cursor: pointer;
+}
+
+#order h4:hover, #song h4:hover {
+  text-decoration: underline;
+}
+
+.play {
+  height: 24px;
+  width: 24px;
+  background-image: url(play.png);
+  margin-left: 15px;
+}
+
+.play:hover {
+  background-position: 0 -24px;
+}
