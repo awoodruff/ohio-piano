@@ -7,7 +7,12 @@
 </head>
 <body>
   <div id='wrapper'>
+    <header>
+      <h1>Ohio is a Piano!</h1>
+    </header>
     <div id='ui'>
+      <h3>Huh?</h3>
+      <p id="about">Most maps of data use color and other <em>visual</em> variables. This one uses <em>sound</em>. A typical piano has 88 keys, and Ohio has 88 counties; thus, every county can have its own key! The way piano keys are assigned to counties depends on data. Choose a Census attribute below, and counties will be assigned piano keys. The higher the pitch, the higer the attribute value. Map colors indicate the black and white keys of a piano. Play around and see how the geography of the music changes!</p>
       <h3>First, sort notes by:</h3>
       <section id='sort'>
         <select id='sort-field'></select>
@@ -22,8 +27,8 @@
       <section id='song'>
         <h4>Play a song!</h4><div class='play'></div>
       </section>
-      <section>
-        <h4 id='route'>Play a route!</h4>
+      <section id='route'>
+        <h4>Play a route!</h4>
         <p>From:</p>
         <select id='from'></select>
         <p>To:</p>
@@ -31,6 +36,8 @@
       </section>
     </div>
     <div id='map'></div>
+    <p id="credit">This silly map was made by <a href="http://andywoodruff.com">Andy Woodruff</a> of <a href="http://axismaps.com">Axis Maps</a></p>
+    <div id="warning">Beware! This map makes noise when you interact with it!</div>
   </div>
 
   <script src='jquery/jquery-2.2.1.min.js'></script>

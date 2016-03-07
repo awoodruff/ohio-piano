@@ -20,6 +20,13 @@ var fields;
 
 var playInterval;
 
+var songPopup = L.popup().setContent('Geographic center of song');
+var songLatLngs = [];
+
+$('#warning').click(function(){
+  $(this).fadeOut();
+})
+
 var countiesLayer = L.geoJson(countiesGeoJson, {
     onEachFeature: function(feature, layer) {
       layersByName[feature.properties.NAME] = layer;
@@ -35,12 +42,17 @@ var countiesLayer = L.geoJson(countiesGeoJson, {
     playNote(i);
 
     e.layer.setStyle({
-      fillOpacity: 0.5
+      fillOpacity: 0.75,
+      weight: 2,
+      color: '#000',
+      fillColor: '#333'
     });
   }).on('mouseout',function(e){
     e.layer.setStyle({
-      fillOpacity: 0.2
-    });
+      fillOpacity: 0.2,
+      weight: 1,
+      color: '#333'
+    }).setStyle(e.layer._style);
   }).addTo(map);
 
 scaleToFit();
@@ -75,11 +87,7 @@ $.get('ohio.csv',function(csv){
 });
 
 var notes = [];
-for ( var i=1; i<89; i++) {
-  var el = document.createElement('audio');
-  el.src = 'notes/' + i + '.mp3';
-  notes.push(el);
-}
+
 
 for ( i = 0; i < citiesArray.length; i ++ ) {
   $('<option>')
@@ -95,6 +103,7 @@ $('#to').on('change', routeChange)[0].selectedIndex = parseInt(Math.random()*cit
 $('#from').on('change', routeChange)[0].selectedIndex = parseInt(Math.random()*citiesArray.length);
 
 function playNote(i) {
+  $('#warning').fadeOut();
   if (notes[i].paused) {
     notes[i].play();
   }else{
@@ -113,15 +122,29 @@ function sortCountiesOn(fieldName) {
     });
     sortedNames = countyData.map(function(row){ return row['County name'] });
   }
+  for (var i = 0; i < sortedNames.length; i ++ ) {
+    var layer = layersByName[ sortedNames[i] ];
+    var k = i  % 12;
+    if (k == 1 || k == 4 || k == 8 || k == 9 || k == 11) {
+      layer.setStyle({fillColor: '#000'});
+      layer._style = {fillColor: '#000'};
+    } else {
+      layer.setStyle({fillColor: '#ccc'});
+      layer._style = {fillColor: '#ccc'};
+    }
+  }
 }
 
 function playInOrder() {
+  clearInterval(playInterval);
   var count = -1;
   playInterval = setInterval(function() {
     if (count >= 0) {
       layersByName[ sortedNames[count] ].setStyle({
-        fillOpacity: 0.2
-      });
+        fillOpacity: 0.2,
+        weight: 1,
+        color: '#333'
+      }).setStyle(layersByName[ sortedNames[count] ]._style);
     }
     count ++;
     if (count == sortedNames.length) {
@@ -132,37 +155,73 @@ function playInOrder() {
     playNote(count);
 
     layer.setStyle({
-      fillOpacity: 0.5
+      fillOpacity: 0.75,
+      weight: 2,
+      color: '#000',
+      fillColor: '#333'
     });
   },50);
 }
 
 function playSong() {
+  clearInterval(playInterval);
   var count = -1;
+  songLatLngs = [];
+  songPopup.setContent('Geographic center of song');
   playInterval = setInterval(function() {
     if (count >= 0) {
       for ( var i in songArray[count] ) {
         layersByName[ sortedNames[songArray[count][i]] ].setStyle({
-          fillOpacity: 0.2
-        });
+          fillOpacity: 0.2,
+          weight: 1,
+          color: '#333'
+        }).setStyle(layersByName[ sortedNames[songArray[count][i]] ]._style);
       }
       
     }
     count ++;
     if (count == songArray.length) {
       clearInterval(playInterval);
+      reverseGeocode(songPopup.getLatLng());
+      setTimeout(function(){
+        map.closePopup(songPopup);
+      },4000)
       return;
     }
     for ( var i in songArray[count] ) {
-        var layer = layersByName[ sortedNames[songArray[count][i]] ]
-        playNote(songArray[count][i]);
+      var layer = layersByName[ sortedNames[songArray[count][i]] ];
+      songLatLngs.push(layer.getBounds().getCenter())
+      playNote(songArray[count][i]);
 
-        layer.setStyle({
-          fillOpacity: 0.5
-        });
-      }
+      layer.setStyle({
+        fillOpacity: 0.75,
+        weight: 2,
+        color: '#000',
+        fillColor: '#333'
+      });
+    }
+    var center = getSongCenter();
+    songPopup.setLatLng(center).openOn(map);
     
   },175);
+}
+
+function getSongCenter() {
+  var sumLat = 0;
+  var sumLng = 0;
+  for (var i = 0; i < songLatLngs.length; i ++) {
+    sumLat += songLatLngs[i].lat;
+    sumLng += songLatLngs[i].lng;
+  }
+  return [sumLat/songLatLngs.length, sumLng/songLatLngs.length];
+}
+
+function reverseGeocode(latlng) {
+  $.getJSON('http://open.mapquestapi.com/geocoding/v1/reverse?key=U1wFm9vioETmo92DWyc6tzAq5PhIKoED&location=' + latlng.lat + ',' + latlng.lng, function(response){
+    var location = response.results[0].locations[0];
+    songPopup.setContent('Geographic center of song:<br>' + location.adminArea5 + ', ' + location.adminArea4).openOn(map);
+    //console.log()
+  })
 }
 
 function routeChange() {
@@ -195,8 +254,10 @@ function getRoute(from,to) {
     playInterval = setInterval(function() {
       if (count >= 0) {
         countySequence[count].setStyle({
-          fillOpacity: 0.2
-        });
+          fillOpacity: 0.2,
+          weight: 1,
+          color: '#333'
+        }).setStyle(countySequence[count]._style);
       }
       count ++;
       if (count == countySequence.length) {
@@ -210,7 +271,10 @@ function getRoute(from,to) {
       playNote( sortedNames.indexOf(layer.feature.properties.NAME) );
 
       layer.setStyle({
-        fillOpacity: 0.5
+        fillOpacity: 0.75,
+        weight: 2,
+        color: '#000',
+        fillColor: '#333'
       });
     },200);
   })

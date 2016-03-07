@@ -4,6 +4,8 @@ html, body {
   margin: 0;
   color: #333;
   font-family: 'PT Sans', sans-serif;
+  font-size: 16px;
+  color: white;
 }
 #wrapper {
   white-space: nowrap;
@@ -11,22 +13,36 @@ html, body {
   height: 100%;
 }
 
+header {
+  height: 45px;
+  background-color: #333;
+}
+
+header h1 {
+  line-height: 45px;
+  font-size: 30px;
+  text-align: center;
+  margin: 0;
+}
+
 #ui {
   width: 240px;
-  background-color: #eee;
-  height: 100%;
+  background-color: #333;
+  height: calc(100% - 45px);
   float: left;
-  border-right: 1px solid #999;
+  overflow: auto;
 }
 
 #map {
-  height: 100%;
+  height: calc(100% - 45px);
   margin-left: 240px;
+  border-top: 1px solid #999;
+  border-left: 1px solid #999;
 }
 
 #ui section{
-  padding: 10px;
-  height: 40px;
+  padding: 5px 10px;
+  height: 30px;
   border-top: 1px solid #ccc;
 }
 
@@ -35,7 +51,7 @@ html, body {
 }
 
 #ui h3 {
-  margin: 0 0 10px 10px;
+  margin: 0 0 5px 10px;
   text-transform: uppercase;
 }
 
@@ -51,7 +67,7 @@ select {
 #ui section h4, #ui section > div {
   display: inline-block;
   vertical-align: middle;
-  line-height: 40px;
+  line-height: 30px;
 }
 
 #order, #song {
@@ -60,6 +76,17 @@ select {
 
 #order h4:hover, #song h4:hover {
   text-decoration: underline;
+}
+
+#route p, p#about {
+  margin: 5px 0;
+}
+
+p#about {
+  padding: 10px;
+  white-space: normal;
+  font-size: 13px;
+  line-height: 15px;
 }
 
 .play {
@@ -71,4 +98,81 @@ select {
 
 .play:hover {
   background-position: 0 -24px;
+}
+
+p#credit {
+  color: #333;
+  padding: 5px;
+  font-size: 12px;
+  position: absolute;
+  bottom: 0;
+  left: 240px;
+  white-space: normal;
+  z-index: 1000;
+  margin: 0;
+}
+p#credit a {
+  color: #333;
+}
+
+#warning {
+  position: absolute;
+  z-index: 1000;
+  background-color: #fcc;
+  color: #333;
+  width: 400px;
+  padding: 10px;
+  left: 50%;
+  top: 50px;
+  margin-left: -200px;
+  text-align: center;
+  border: 1px solid #999;
+  cursor: pointer;
+}
+
+@media (max-width: 500px) {
+  #ui {
+    float: none;
+    width: 100%;
+    height: 200px;
+  }
+
+  #map {
+    margin-left: 0;
+    height: calc(100% - 200px);
+  }
+
+  #ui section {
+    vertical-align: top;
+    border: none;
+    height: 18px;
+    line-height: 18px;
+    padding: 5px 10px;
+  }
+
+  #ui section h4, #ui section > div {
+    line-height: 18px;
+  }
+
+  #ui h3:first-child, #sort {
+    float: left;
+  }
+
+  #ui section#sort {
+    padding: 0;
+    margin-left: 15px;
+  }
+
+  #ui h3:nth-of-type(2) {
+    clear: left;
+  }
+
+  #ui section#route {
+    float: right;
+    margin-top: -84px;
+  }
+
+  .play {
+    display: none;
+  }
 }
