@@ -92,7 +92,6 @@ for(var i = 1; i < 89; i ++) {
   notes.push(a);
 }
 
-
 for ( i = 0; i < citiesArray.length; i ++ ) {
   $('<option>')
     .attr('value',citiesArray[i])
