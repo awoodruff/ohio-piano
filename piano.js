@@ -87,6 +87,10 @@ $.get('ohio.csv',function(csv){
 });
 
 var notes = [];
+for(var i = 1; i < 89; i ++) {
+  var a = new Audio('notes/' + i + '.mp3');
+  notes.push(a);
+}
 
 
 for ( i = 0; i < citiesArray.length; i ++ ) {
