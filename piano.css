@@ -118,16 +118,21 @@ p#credit a {
 #warning {
   position: absolute;
   z-index: 1000;
-  background-color: #fcc;
+  background-color: rgba(255,200,200,.9);
   color: #333;
   width: 400px;
+  height: 100px;
   padding: 10px;
   left: 50%;
-  top: 50px;
+  top: 50%;
   margin-left: -200px;
+  margin-top: -50px;
   text-align: center;
   border: 1px solid #999;
   cursor: pointer;
+  font-size: 30px;
+  white-space: normal;
+  line-height: 50px;
 }
 
 @media (max-width: 500px) {

@@ -27,6 +27,10 @@ $('#warning').click(function(){
   $(this).fadeOut();
 })
 
+setTimeout( function(){
+  $('#warning').fadeOut();
+},4000);
+
 var countiesLayer = L.geoJson(countiesGeoJson, {
     onEachFeature: function(feature, layer) {
       layersByName[feature.properties.NAME] = layer;
