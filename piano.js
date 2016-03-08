@@ -27,9 +27,12 @@ $('#warning').click(function(){
   $(this).fadeOut();
 })
 
-setTimeout( function(){
-  $('#warning').fadeOut();
-},4000);
+$('body').on('mouseover',function(){
+  $('body').off('mouseover');
+  setTimeout( function(){
+    $('#warning').fadeOut();
+  },4000);
+});
 
 var countiesLayer = L.geoJson(countiesGeoJson, {
     onEachFeature: function(feature, layer) {
