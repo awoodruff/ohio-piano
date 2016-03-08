@@ -20,7 +20,7 @@ var fields;
 
 var playInterval;
 
-var songPopup = L.popup().setContent('Geographic center of song');
+var songPopup = L.popup({autoPan:false}).setContent('Geographic center of song');
 var songLatLngs = [];
 
 $('#warning').click(function(){
